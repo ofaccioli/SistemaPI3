@@ -6,6 +6,7 @@ package Telas;
 
 import Modelo.BEAN.Aluno;
 import javax.swing.JOptionPane;
+import Modelo.DAO.AlunoDAO;
 
 /**
  *
@@ -13,11 +14,14 @@ import javax.swing.JOptionPane;
  */
 public class TelaCadAluno extends javax.swing.JFrame {
 
+    
+    private AlunoDAO dao;
     /**
      * Creates new form telaCadUsuario
      */
     public TelaCadAluno() {
         initComponents();
+        dao = new AlunoDAO();
     }
 
     /**
@@ -192,18 +196,6 @@ public class TelaCadAluno extends javax.swing.JFrame {
         jLabel8.setText("CURSO");
 
         cbCurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
-
-        try {
-            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
-        try {
-            txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -390,7 +382,13 @@ public class TelaCadAluno extends javax.swing.JFrame {
     
     private void btnCadastraUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastraUsuarioActionPerformed
        Aluno a = obterAluno();
-       JOptionPane.showMessageDialog(this, a.toString(), "Dados do Aluno", JOptionPane.INFORMATION_MESSAGE);
+       String erro = dao.salvar(a);
+       if (erro == ""){
+           JOptionPane.showMessageDialog(this, "Salvo com Sucesso!", "Dados do Aluno", JOptionPane.INFORMATION_MESSAGE);
+       } else {
+           JOptionPane.showMessageDialog(this, erro, "Alerta", JOptionPane.ERROR_MESSAGE);
+       }
+       
        // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastraUsuarioActionPerformed
 
