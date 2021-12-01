@@ -4,6 +4,9 @@
  */
 package Telas;
 
+import Conexao.Conexao;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author otavi
@@ -49,8 +52,6 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Senha");
-
-        txtSenha.setText("jPasswordField1");
 
         BtnEntrar.setText("ENTRAR");
         BtnEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -126,8 +127,20 @@ public class TelaLogin extends javax.swing.JFrame {
 
     private void BtnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnEntrarActionPerformed
         // TODO add your handling code here:
-        TelaPrincipal tela = new TelaPrincipal();
-        tela.setVisible(true);
+        
+        if(txtLogin.getText().equals("OTAVIO")&&txtSenha.getText().equals("1234"))
+                {
+                   JOptionPane.showMessageDialog(null, "Bem Vindo!"); 
+                   TelaPrincipal tela = new TelaPrincipal();
+                   tela.setVisible(true); 
+                }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Senha ou usuário inválido"); 
+            txtLogin.setText("");
+            txtSenha.setText("");
+            txtLogin.requestFocus();
+        }
     }//GEN-LAST:event_BtnEntrarActionPerformed
 
     /**
@@ -139,6 +152,9 @@ public class TelaLogin extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        Conexao.conectar();
+        Conexao.desconectar();
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
